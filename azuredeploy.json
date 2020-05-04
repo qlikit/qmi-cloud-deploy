@@ -16,10 +16,86 @@
             },
             "defaultValue": ""
         },
+
     },
-    "variables": {},
+    "variables": {
+        "baseTemplateUrl": "[concat(parameters('_artifactsLocation'), 'nested/')]",
+        "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]"
+    },
     "resources": [
-        
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "networkTemplate",
+            "properties" : {
+                "mode": "Incremental",
+                "parameters": {},
+                "templateLink": {
+                    "uri": "[concat(variables('baseTemplateUrl'),'network.json',parameters('_artifactsLocationSasToken'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "computeTemplate",
+            "properties" : {
+                "mode": "Incremental",
+                "parameters": {},
+                "templateLink": {
+                    "uri": "[concat(variables('baseTemplateUrl'),'compute.json',parameters('_artifactsLocationSasToken'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "dnsTemplate",
+            "properties" : {
+                "mode": "Incremental",
+                "parameters": {},
+                "templateLink": {
+                    "uri": "[concat(variables('baseTemplateUrl'),'dns.json',parameters('_artifactsLocationSasToken'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "keyVaultTemplate",
+            "properties" : {
+                "mode": "Incremental",
+                "parameters": {},
+                "templateLink": {
+                    "uri": "[concat(variables('baseTemplateUrl'),'keyVault.json',parameters('_artifactsLocationSasToken'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "cosmosDbTemplate",
+            "properties" : {
+                "mode": "Incremental",
+                "parameters": {},
+                "templateLink": {
+                    "uri": "[concat(variables('baseTemplateUrl'),'cosmosDb.json',parameters('_artifactsLocationSasToken'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "wafPolicyTemplate",
+            "properties" : {
+                "mode": "Incremental",
+                "parameters": {},
+                "templateLink": {
+                    "uri": "[concat(variables('baseTemplateUrl'),'wafPolicy.json',parameters('_artifactsLocationSasToken'))]"
+                }
+            }
+        }
+
     ],
     "outputs": {}
 
