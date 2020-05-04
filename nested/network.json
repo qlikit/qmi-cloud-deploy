@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "qmiCommon": {
+            "type": "object",
+            "metadata": {
+                "description": "Networking Parameters passed as an object"
+            }
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-12-01",
+            "location": "[parameters('qmiCommon').location]",
+            "name": "[parameters('qmiCommon').vnetName]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('qmiCommon').vnetAddressSpace]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "app-gw",
+                        "properties": {
+                            "addressPrefix": "[parameters('qmiCommon').appGwAddressSpace]"
+
+                        }
+                    },
+                    {
+                        "name": "mgmt",
+                        "properties": {
+                            "addressPrefix": "[parameters('qmiCommon').mgmtAddressSpace]"
+
+                        }
+                    },
+                    {
+                        "name": "deployments",
+                        "properties": {
+                            "addressPrefix": "[parameters('qmiCommon').deploymentAddressSpace]"
+
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -16,11 +16,58 @@
             },
             "defaultValue": ""
         },
+        "location": {
+            "type": "string",
+            "defaultValue": "East US",
+            "metadata": {
+                "description": "Region to deploy resources into"
+                }
+        },
+        "vnetName": {
+            "type": "string",
+            "defaultValue": "QMI-Cloud-Vnet",
+            "metadata": {
+                "description": "Name for QMI Cloud Vnet"
+            }
+        },
+        "vnetAddressSpace": {
+            "type": "string",
+            "metadata": {
+                "description": "CIDR Range for VNet"
+            }
+        },
+        "appGwAdressSpace": {
+            "type": "string",
+               "metadata": {
+                "description": "CIDR Range for App Gw subnet"
+            }
+        },
+        "mgmtAdressSpace": {
+            "type": "string",
+            "metadata": {
+                "description": "CIDR Range for mgmt subnet"
+            }
+        },
+        "deploymentAdressSpace": {
+            "type": "string",
+            "metadata": {
+                "description": "CIDR Range for VM deployment subnet"
+            }
+        },
+
 
     },
     "variables": {
         "baseTemplateUrl": "[concat(parameters('_artifactsLocation'), 'nested/')]",
-        "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]"
+        "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]",
+        "qmiCommon": {
+            "location": "[parameters('location')]",
+            "vnetName": "[parameters('vnetName')]",
+            "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
+            "appGwAdressSpace": "[parameters('appGwAdressSpace')]",
+            "mgmtAdressSpace": "[parameters('mgmtAdressSpace')]",
+            "deploymentAdressSpace": "[parameters('deploymentAdressSpace')]"
+        }
     },
     "resources": [
         {
@@ -29,7 +76,11 @@
             "name": "networkTemplate",
             "properties" : {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "qmiCommon":{
+                        "value": "[variables('qmiCommon')]"
+                    }
+                },
                 "templateLink": {
                     "uri": "[concat(variables('baseTemplateUrl'),'network.json',parameters('_artifactsLocationSasToken'))]"
                 }
