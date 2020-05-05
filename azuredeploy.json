@@ -89,6 +89,13 @@
             "metadata": {
                 "description": "Password for deployment VM"
             }
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "QMI-Vault",
+            "metadata": {
+                "description": "Name of the Key Vault used to store deployment secrets"
+            }
         }
 
     },
@@ -98,13 +105,14 @@
         "qmiCommon": {
             "adminPassword": "[parameters('adminPassword')]",
             "adminUsername": "[parameters('adminUsername')]",
-            "location": "[parameters('location')]",
-            "vnetName": "[concat(parameters('vnetName'),'-',parameters('environmentSuffix'))]",
-            "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
             "appGwAddressSpace": "[parameters('appGwAddressSpace')]",
-            "mgmtAddressSpace": "[parameters('mgmtAddressSpace')]",
             "deploymentAddressSpace": "[parameters('deploymentAddressSpace')]",
             "deploymentVmName": "[concat(parameters('deploymentVmName'),'-',parameters('environmentSuffix'))]",
+            "keyVaultName": "[parameters('keyVaultName')]",
+            "location": "[parameters('location')]",
+            "mgmtAddressSpace": "[parameters('mgmtAddressSpace')]",
+            "vnetName": "[concat(parameters('vnetName'),'-',parameters('environmentSuffix'))]",
+            "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
             "vmSize": "[parameters('vmSize')]"
         }
     },
@@ -210,7 +218,18 @@
         }
 
     ],
-    "outputs": {}
-
-
+    "outputs": {
+        "managedIdentity":{
+            "type": "object",
+            "value": "[reference('computeTemplate').outputs.managedIdentity]"
+        },
+        "privateIp":{
+            "type": "object",
+            "value": "[reference('computeTemplate').outputs.privateIp]"
+        },
+        "vaultUri": {
+            "type": "string",
+            "value": "[reference('keyVaultTemplate').outputs.vaultUri]"
+        }
+    }
 }

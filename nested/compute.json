@@ -40,6 +40,9 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces/',variables('nicName'))]"
             ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[parameters('qmiCommon').vmSize]"
@@ -81,5 +84,14 @@
         }
     ],
     "outputs": {
+        "managedIdentity": {
+            "type": "object",
+            "value": "[reference(resourceId('Microsoft.Compute/virtualMachines', parameters('qmiCommon').deploymentVmName), 'Full').identity]"
+        },
+        "privateIp": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))).ipConfigurations.properties.privateIPAddress]"
+            
+        }
     }
 }
