@@ -1,4 +1,4 @@
-{    
+{
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
@@ -9,7 +9,8 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+    },
     "resources": [
         {
             "type": "Microsoft.KeyVault/vaults",
@@ -17,20 +18,63 @@
             "location": "[parameters('qmiCommon').location]",
             "name": "[parameters('qmiCommon').keyVaultName]",
             "properties": {
-                "enableSoftDelete": true ,
+                "enableSoftDelete": true,
                 "tenantId": "[subscription().tenantId]",
                 "sku": {
                     "family": "A",
                     "name": "standard"
-                
-                }
+
+                },
+                "accessPolicies": [
+                    {
+                        "objectId": "db8505a8-e30d-411a-9a27-c2795a456d4f",
+                        "tenantId": "[subscription().tenantId]",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    }
+                ]
             }
         }
     ],
     "outputs": {
         "vaultUri": {
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/',parameters('qmiCommon').keyVaultName ),'Full').properties.vaultUri]"
+            "type": "object",
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/',parameters('qmiCommon').keyVaultName ), '2016-10-01')]"
         }
     }
 }

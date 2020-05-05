@@ -108,7 +108,7 @@
             "appGwAddressSpace": "[parameters('appGwAddressSpace')]",
             "deploymentAddressSpace": "[parameters('deploymentAddressSpace')]",
             "deploymentVmName": "[concat(parameters('deploymentVmName'),'-',parameters('environmentSuffix'))]",
-            "keyVaultName": "[parameters('keyVaultName')]",
+            "keyVaultName": "[concat(parameters('keyVaultName'),'-',parameters('environmentSuffix'))]",
             "location": "[parameters('location')]",
             "mgmtAddressSpace": "[parameters('mgmtAddressSpace')]",
             "vnetName": "[concat(parameters('vnetName'),'-',parameters('environmentSuffix'))]",
@@ -172,6 +172,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "keyVaultTemplate",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/computeTemplate"
+            ],
             "properties" : {
                 "mode": "Incremental",
                 "parameters": {
@@ -224,11 +227,11 @@
             "value": "[reference('computeTemplate').outputs.managedIdentity]"
         },
         "privateIp":{
-            "type": "object",
+            "type": "string",
             "value": "[reference('computeTemplate').outputs.privateIp]"
         },
         "vaultUri": {
-            "type": "string",
+            "type": "object",
             "value": "[reference('keyVaultTemplate').outputs.vaultUri]"
         }
     }

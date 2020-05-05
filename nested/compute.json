@@ -50,7 +50,7 @@
                 "osProfile": {
                     "computerName": "[parameters('qmiCommon').deploymentVmName]",
                     "adminUsername": "[parameters('qmiCommon').adminUsername]",
-                    "adminPassword": "[parameters('qmiCommon').adminPassword]"
+                    "adminPassword": "[parameters('qmiCommon').adminPassword]"                   
 
                 },
                 "storageProfile": {
@@ -69,7 +69,7 @@
                         }
 
                     }
-                },
+                },                
                 "networkProfile": {
                     "networkInterfaces": [
                         {
@@ -86,11 +86,11 @@
     "outputs": {
         "managedIdentity": {
             "type": "object",
-            "value": "[reference(resourceId('Microsoft.Compute/virtualMachines', parameters('qmiCommon').deploymentVmName), 'Full').identity]"
+            "value": "[reference(resourceId('Microsoft.Compute/virtualMachines', parameters('qmiCommon').deploymentVmName), '2019-07-01', 'Full').identity]"
         },
         "privateIp": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))).ipConfigurations.properties.privateIPAddress]"
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces',variables('nicName')), '2019-12-01').ipConfigurations[0].properties.privateIPAddress]"
             
         }
     }
