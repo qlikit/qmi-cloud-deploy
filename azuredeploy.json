@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Moodle/master/"
+            "defaultValue": "https://raw.githubusercontent.com/QlikIT/qmi-cloud-deploy/master/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -36,19 +36,19 @@
                 "description": "CIDR Range for VNet"
             }
         },
-        "appGwAdressSpace": {
+        "appGwAddressSpace": {
             "type": "string",
                "metadata": {
                 "description": "CIDR Range for App Gw subnet"
             }
         },
-        "mgmtAdressSpace": {
+        "mgmtAddressSpace": {
             "type": "string",
             "metadata": {
                 "description": "CIDR Range for mgmt subnet"
             }
         },
-        "deploymentAdressSpace": {
+        "deploymentAddressSpace": {
             "type": "string",
             "metadata": {
                 "description": "CIDR Range for VM deployment subnet"
@@ -64,9 +64,9 @@
             "location": "[parameters('location')]",
             "vnetName": "[parameters('vnetName')]",
             "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
-            "appGwAdressSpace": "[parameters('appGwAdressSpace')]",
-            "mgmtAdressSpace": "[parameters('mgmtAdressSpace')]",
-            "deploymentAdressSpace": "[parameters('deploymentAdressSpace')]"
+            "appGwAddressSpace": "[parameters('appGwAddressSpace')]",
+            "mgmtAddressSpace": "[parameters('mgmtAddressSpace')]",
+            "deploymentAddressSpace": "[parameters('deploymentAddressSpace')]"
         }
     },
     "resources": [
