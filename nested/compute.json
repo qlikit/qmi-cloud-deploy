@@ -1,8 +1,85 @@
-{    
+{
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
-    "variables": {},
-    "resources": [],
-    "outputs": {}
+    "parameters": {
+        "qmiCommon": {
+            "type": "object",
+            "metadata": {
+                "description": "Networking Parameters passed as an object"
+            }
+        }
+    },
+    "variables": {
+        "nicName": "[concat(parameters('qmiCommon').deploymentVmName,'-NIC')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-12-01",
+            "location": "[parameters('qmiCommon').location]",
+            "name": "[variables('nicName')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('qmiCommon').vnetName,'mgmt')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "location": "[parameters('qmiCommon').location]",
+            "name": "[parameters('qmiCommon').deploymentVmName]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces/',variables('nicName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('qmiCommon').vmSize]"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('qmiCommon').deploymentVmName]",
+                    "adminUsername": "[parameters('qmiCommon').adminUsername]",
+                    "adminPassword": "[parameters('qmiCommon').adminPassword]"
+
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "18.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "osType": "Linux",
+                        "diskSizeGB": 150,
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/',variables('nicName'))]",
+                            "properties": {                                
+                                "primary": true
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
 }

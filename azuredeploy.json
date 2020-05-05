@@ -25,7 +25,7 @@
         },
         "vnetName": {
             "type": "string",
-            "defaultValue": "QMI-Cloud-Vnet",
+            "defaultValue": "QMI-Vnet",
             "metadata": {
                 "description": "Name for QMI Cloud Vnet"
             }
@@ -54,19 +54,58 @@
                 "description": "CIDR Range for VM deployment subnet"
             }
         },
-
+        "deploymentVmName": {
+            "type": "string",
+            "defaultValue": "QMI-TF",
+            "metadata": {
+                "description": "Name of VM that acts as webserver and terraform server"
+            }
+        },
+        "environmentSuffix": {
+            "type": "string",
+            "allowedValues": [
+                "Prod",
+                "Dev",
+                "QA",
+                "Staging"
+            ]
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_E2s_v3",
+            "metadata": {
+                "description": "Deployment VM Size"
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "qmiadmin",
+            "metadata": {
+                "description": "Admin username for deployment VM"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for deployment VM"
+            }
+        }
 
     },
     "variables": {
         "baseTemplateUrl": "[concat(parameters('_artifactsLocation'), 'nested/')]",
         "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]",
         "qmiCommon": {
+            "adminPassword": "[parameters('adminPassword')]",
+            "adminUsername": "[parameters('adminUsername')]",
             "location": "[parameters('location')]",
-            "vnetName": "[parameters('vnetName')]",
+            "vnetName": "[concat(parameters('vnetName'),'-',parameters('environmentSuffix'))]",
             "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
             "appGwAddressSpace": "[parameters('appGwAddressSpace')]",
             "mgmtAddressSpace": "[parameters('mgmtAddressSpace')]",
-            "deploymentAddressSpace": "[parameters('deploymentAddressSpace')]"
+            "deploymentAddressSpace": "[parameters('deploymentAddressSpace')]",
+            "deploymentVmName": "[concat(parameters('deploymentVmName'),'-',parameters('environmentSuffix'))]",
+            "vmSize": "[parameters('vmSize')]"
         }
     },
     "resources": [
@@ -90,9 +129,16 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "computeTemplate",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/networkTemplate"
+            ],
             "properties" : {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "qmiCommon":{
+                        "value": "[variables('qmiCommon')]"
+                    }
+                },
                 "templateLink": {
                     "uri": "[concat(variables('baseTemplateUrl'),'compute.json',parameters('_artifactsLocationSasToken'))]"
                 }
@@ -104,7 +150,11 @@
             "name": "dnsTemplate",
             "properties" : {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "qmiCommon":{
+                        "value": "[variables('qmiCommon')]"
+                    }
+                },
                 "templateLink": {
                     "uri": "[concat(variables('baseTemplateUrl'),'dns.json',parameters('_artifactsLocationSasToken'))]"
                 }
@@ -116,7 +166,11 @@
             "name": "keyVaultTemplate",
             "properties" : {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "qmiCommon":{
+                        "value": "[variables('qmiCommon')]"
+                    }
+                },
                 "templateLink": {
                     "uri": "[concat(variables('baseTemplateUrl'),'keyVault.json',parameters('_artifactsLocationSasToken'))]"
                 }
@@ -128,7 +182,11 @@
             "name": "cosmosDbTemplate",
             "properties" : {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "qmiCommon":{
+                        "value": "[variables('qmiCommon')]"
+                    }
+                },
                 "templateLink": {
                     "uri": "[concat(variables('baseTemplateUrl'),'cosmosDb.json',parameters('_artifactsLocationSasToken'))]"
                 }
@@ -140,7 +198,11 @@
             "name": "wafPolicyTemplate",
             "properties" : {
                 "mode": "Incremental",
-                "parameters": {},
+                "parameters": {
+                    "qmiCommon":{
+                        "value": "[variables('qmiCommon')]"
+                    }
+                },
                 "templateLink": {
                     "uri": "[concat(variables('baseTemplateUrl'),'wafPolicy.json',parameters('_artifactsLocationSasToken'))]"
                 }
