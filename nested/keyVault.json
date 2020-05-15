@@ -25,6 +25,8 @@
             "name": "[parameters('qmiCommon').keyVaultName]",
             "properties": {
                 "enableSoftDelete": true,
+                "enabledForDeployment": true,
+                "enabledForTemplateDeployment": true,
                 "tenantId": "[subscription().tenantId]",
                 "sku": {
                     "family": "A",

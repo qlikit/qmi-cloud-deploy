@@ -155,22 +155,6 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "dnsTemplate",
-            "properties" : {
-                "mode": "Incremental",
-                "parameters": {
-                    "qmiCommon":{
-                        "value": "[variables('qmiCommon')]"
-                    }
-                },
-                "templateLink": {
-                    "uri": "[concat(variables('baseTemplateUrl'),'dns.json',parameters('_artifactsLocationSasToken'))]"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
             "name": "keyVaultTemplate",
             "dependsOn": [
                 "Microsoft.Resources/deployments/computeTemplate"
