@@ -16,36 +16,23 @@
             },
             "defaultValue": ""
         },
-        "location": {
-            "type": "string",
-            "defaultValue": "East US",
+        "adminPassword": {
+            "type": "securestring",
             "metadata": {
-                "description": "Region to deploy resources into"
-                }
-        },
-        "vnetName": {
-            "type": "string",
-            "defaultValue": "QMI-Vnet",
-            "metadata": {
-                "description": "Name for QMI Cloud Vnet"
+                "description": "Password for deployment VM"
             }
         },
-        "vnetAddressSpace": {
+        "adminUsername": {
             "type": "string",
+            "defaultValue": "qmiadmin",
             "metadata": {
-                "description": "CIDR Range for VNet"
+                "description": "Admin username for deployment VM"
             }
         },
         "appGwAddressSpace": {
             "type": "string",
                "metadata": {
                 "description": "CIDR Range for App Gw subnet"
-            }
-        },
-        "mgmtAddressSpace": {
-            "type": "string",
-            "metadata": {
-                "description": "CIDR Range for mgmt subnet"
             }
         },
         "deploymentAddressSpace": {
@@ -64,11 +51,31 @@
         "environmentSuffix": {
             "type": "string",
             "allowedValues": [
-                "Prod",
-                "Dev",
-                "QA",
-                "Staging"
+                "prod",
+                "dev",
+                "qa",
+                "staging"
             ]
+        },
+        "keyVaultName": {
+            "type": "string",
+            "defaultValue": "QMI-Vault",
+            "metadata": {
+                "description": "Name of the Key Vault used to store deployment secrets"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "East US",
+            "metadata": {
+                "description": "Region to deploy resources into"
+                }
+        },
+        "mgmtAddressSpace": {
+            "type": "string",
+            "metadata": {
+                "description": "CIDR Range for mgmt subnet"
+            }
         },
         "vmSize": {
             "type": "string",
@@ -77,31 +84,23 @@
                 "description": "Deployment VM Size"
             }
         },
-        "adminUsername": {
+        "vnetAddressSpace": {
             "type": "string",
-            "defaultValue": "qmiadmin",
             "metadata": {
-                "description": "Admin username for deployment VM"
+                "description": "CIDR Range for VNet"
             }
         },
-        "adminPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password for deployment VM"
-            }
-        },
-        "keyVaultName": {
+        "vnetName": {
             "type": "string",
-            "defaultValue": "QMI-Vault",
+            "defaultValue": "QMI-Vnet",
             "metadata": {
-                "description": "Name of the Key Vault used to store deployment secrets"
+                "description": "Name for QMI Cloud Vnet"
             }
         }
 
     },
     "variables": {
         "baseTemplateUrl": "[concat(parameters('_artifactsLocation'), 'nested/')]",
-        "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]",
         "qmiCommon": {
             "adminPassword": "[parameters('adminPassword')]",
             "adminUsername": "[parameters('adminUsername')]",
@@ -115,7 +114,8 @@
             "vnetName": "[concat(parameters('vnetName'),'-',parameters('environmentSuffix'))]",
             "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
             "vmSize": "[parameters('vmSize')]"
-        }
+        },
+        "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]"
     },
     "resources": [
         {

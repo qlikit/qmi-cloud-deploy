@@ -15,6 +15,7 @@
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "apiVersion": "2019-12-12",
             "name": "[parameters('qmiCommon').dbname]",
+            "kind": "MongoDB",
             "location": "[parameters('qmiCommon').location]",
             "properties": {
                 "databaseAccountOfferType": "Standard",
@@ -35,6 +36,7 @@
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('qmiCommon').vnetName,'mgmt')]"
                     }
                 ],
+                "ipRangeFilter": "104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26",
                 "capabilities": [
                     {
                         "name": "EnableMongo"
