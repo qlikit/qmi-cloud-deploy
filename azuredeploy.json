@@ -106,6 +106,7 @@
             "adminPassword": "[parameters('adminPassword')]",
             "adminUsername": "[parameters('adminUsername')]",
             "appGwAddressSpace": "[parameters('appGwAddressSpace')]",
+            "dbname": "[concat('qmi-cosmosdb-', parameters('environmentSuffix'))]",
             "deploymentAddressSpace": "[parameters('deploymentAddressSpace')]",
             "deploymentVmName": "[concat(parameters('deploymentVmName'),'-',parameters('environmentSuffix'))]",
             "keyVaultName": "[concat(parameters('keyVaultName'),'-',parameters('environmentSuffix'))]",
@@ -178,6 +179,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "cosmosDbTemplate",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/networkTemplate"
+            ],
             "properties" : {
                 "mode": "Incremental",
                 "parameters": {

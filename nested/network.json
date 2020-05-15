@@ -34,7 +34,16 @@
                     {
                         "name": "mgmt",
                         "properties": {
-                            "addressPrefix": "[parameters('qmiCommon').mgmtAddressSpace]"
+                            "addressPrefix": "[parameters('qmiCommon').mgmtAddressSpace]",
+                            "serviceEndpoints": [
+                                { 
+                                    "service": "Microsoft.AzureCosmosDB",
+                                    "locations": [
+                                        "East US",
+                                        "West US"
+                                    ]
+                                }
+                            ]
 
                         }
                     },

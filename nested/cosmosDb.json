@@ -10,6 +10,43 @@
         }
     },
     "variables": {},
-    "resources": [],
+    "resources": [
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2019-12-12",
+            "name": "[parameters('qmiCommon').dbname]",
+            "location": "[parameters('qmiCommon').location]",
+            "properties": {
+                "databaseAccountOfferType": "Standard",
+                "locations": [
+                    {
+                        "failoverPriority": 0,
+                        "locationName": "East US"
+                    },
+                    {
+                        "failoverPriority": 1,
+                        "locationName": "West US"
+                    }
+                ],
+                "enableMultipleWriteLocations": false,
+                "isVirtualNetworkFilterEnabled": true,
+                "virtualNetworkRules": [
+                    {
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('qmiCommon').vnetName,'mgmt')]"
+                    }
+                ],
+                "capabilities": [
+                    {
+                        "name": "EnableMongo"
+                    },
+                    {
+                        "name": "DisableRateLimitingResponses"
+                    }
+                ]
+                
+            }
+        
+        }
+    ],
     "outputs": {}
 }
