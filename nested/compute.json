@@ -85,7 +85,7 @@
     ],
     "outputs": {
         "managedIdentity": {
-            "type": "object",
+            "type": "string",
             "value": "[reference(resourceId('Microsoft.Compute/virtualMachines', parameters('qmiCommon').deploymentVmName), '2019-07-01', 'Full').identity]"
         },
         "privateIp": {

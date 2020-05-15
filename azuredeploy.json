@@ -222,15 +222,15 @@
 
     ],
     "outputs": {
-        "managedIdentity":{
+        "vmIdentity":{
             "type": "object",
-            "value": "[reference('computeTemplate').outputs.managedIdentity]"
+            "value": "[reference('computeTemplate').outputs.managedIdentity.principalId.value]"
         },
-        "privateIp":{
+        "privateIpAddress":{
             "type": "string",
-            "value": "[reference('computeTemplate').outputs.privateIp]"
+            "value": "[reference('computeTemplate').outputs.privateIp.value]"
         },
-        "vaultUri": {
+        "keyVaultUri": {
             "type": "object",
             "value": "[reference('keyVaultTemplate').outputs.vaultUri]"
         }
