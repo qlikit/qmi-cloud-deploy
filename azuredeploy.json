@@ -180,6 +180,9 @@
                 "parameters": {
                     "qmiCommon":{
                         "value": "[variables('qmiCommon')]"
+                    },
+                    "vmIdentity": {
+                        "value": "[reference('computeTemplate').outputs.managedIdentity.value.principalId]"
                     }
                 },
                 "templateLink": {
@@ -223,16 +226,16 @@
     ],
     "outputs": {
         "vmIdentity":{
-            "type": "object",
-            "value": "[reference('computeTemplate').outputs.managedIdentity.principalId.value]"
+            "type": "string",
+            "value": "[reference('computeTemplate').outputs.managedIdentity.value.principalId]"
         },
         "privateIpAddress":{
             "type": "string",
             "value": "[reference('computeTemplate').outputs.privateIp.value]"
         },
         "keyVaultUri": {
-            "type": "object",
-            "value": "[reference('keyVaultTemplate').outputs.vaultUri]"
+            "type": "string",
+            "value": "[reference('keyVaultTemplate').outputs.vaultUri.value.vaultUri]"
         }
     }
 }

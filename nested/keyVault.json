@@ -7,6 +7,12 @@
             "metadata": {
                 "description": "Networking Parameters passed as an object"
             }
+        },
+        "vmIdentity": {
+            "type": "string",
+            "metadata": {
+                "description": "Takes the output of the VM identity for use in access policies"
+            }
         }
     },
     "variables": {
@@ -27,7 +33,7 @@
                 },
                 "accessPolicies": [
                     {
-                        "objectId": "db8505a8-e30d-411a-9a27-c2795a456d4f",
+                        "objectId": "[parameters('vmIdentity')]",
                         "tenantId": "[subscription().tenantId]",
                         "permissions": {
                             "keys": [
