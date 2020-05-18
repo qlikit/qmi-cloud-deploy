@@ -14,7 +14,7 @@
         {
             "type": "Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
             "apiVersion": "2019-12-01",
-            "name": "QlikSenseDefault",
+            "name": "[parameters('qmiCommon').wafTemplateName]",
             "location": "eastus",
             "properties": {
                 "customRules": [
