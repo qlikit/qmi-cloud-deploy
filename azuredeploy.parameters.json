@@ -1,18 +1,48 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vnetAddressSpace": {
+        "_artifactsLocation": {
+            "value": "https://raw.githubusercontent.com/QlikIT/qmi-cloud-deploy/master/"
+        },
+        "_artifactsLocationSasToken": {
+            "value": ""
+        },
+        "adminPassword": {
             "value": "" 
+        },
+        "adminUsername": {
+            "value": "qmiadmin"
         },
         "appGwAddressSpace": {
             "value": "" 
         },
+        "deploymentAddressSpace": {
+            "value": "" 
+        },
+        "deploymentVmName": {
+            "value": "QMI-TF"
+        },
+        "environmentSuffix": {
+            "value": "" 
+        },
+        "keyVaultName": {
+            "value": "QMI-Vault"
+        },
+        "location": {
+            "value": "East US"
+        },
         "mgmtAddressSpace": {
             "value": "" 
         },
-        "deploymentAddressSpace": {
+        "vmSize": {
+            "value": "Standard_E2s_v3"
+        },
+        "vnetAddressSpace": {
             "value": "" 
+        },
+        "vnetName": {
+            "value": "QMI-Vnet"
         }
     }
 }
