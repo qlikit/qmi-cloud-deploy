@@ -25,14 +25,14 @@
                 },
                 "subnets": [
                     {
-                        "name": "app-gw",
+                        "name": "App-GW-Sub",
                         "properties": {
                             "addressPrefix": "[parameters('qmiCommon').appGwAddressSpace]"
 
                         }
                     },
                     {
-                        "name": "mgmt",
+                        "name": "Infrastructure",
                         "properties": {
                             "addressPrefix": "[parameters('qmiCommon').mgmtAddressSpace]",
                             "serviceEndpoints": [
@@ -48,7 +48,7 @@
                         }
                     },
                     {
-                        "name": "deployments",
+                        "name": "VM-Deployments",
                         "properties": {
                             "addressPrefix": "[parameters('qmiCommon').deploymentAddressSpace]"
 

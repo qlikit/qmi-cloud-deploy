@@ -10,6 +10,282 @@
         }
     },
     "variables": {},
-    "resources": [],
+    "resources": [
+        {
+            "type": "Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+            "apiVersion": "2019-12-01",
+            "name": "[parameters('qmiCommon').wafTemplateName]",
+            "location": "eastus",
+            "properties": {
+                "customRules": [
+                    {
+                        "name": "AllowDataPrepService",
+                        "priority": 10,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/api/dataprepservice/v1/"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowAdfsOidc",
+                        "priority": 11,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/adfs/oauth2/"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowAdfsSaml",
+                        "priority": 12,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/adfs/ls"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowSamltoQse",
+                        "priority": 13,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/samlauthn/"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowQlikSenseMeasures",
+                        "priority": 14,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/qliksensemeasures/"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowPingAlert",
+                        "priority": 15,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/pingalert"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowQMC",
+                        "priority": 16,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/qrs/"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowNPritingNPE",
+                        "priority": 17,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/npe"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "AllowQDCconsole",
+                        "priority": 18,
+                        "ruleType": "MatchRule",
+                        "action": "Allow",
+                        "matchConditions": [
+                            {
+                                "matchVariables": [
+                                    {
+                                        "variableName": "RequestUri"
+                                    }
+                                ],
+                                "operator": "Contains",
+                                "negationConditon": false,
+                                "matchValues": [
+                                    "/api/qdc/"
+                                ],
+                                "transforms": [
+                                    "Lowercase"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "policySettings": {
+                    "requestBodyCheck": true,
+                    "maxRequestBodySizeInKb": 128,
+                    "fileUploadLimitInMb": 500,
+                    "state": "Enabled",
+                    "mode": "Prevention"
+                },
+                "managedRules": {
+                    "managedRuleSets": [
+                        {
+                            "ruleSetType": "OWASP",
+                            "ruleSetVersion": "3.0",
+                            "ruleGroupOverrides": []
+                        }
+                    ],
+                    "exclusions": [
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Equals",
+                            "selector": "qvla_invite"
+                        },
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Contains",
+                            "selector": "parsely"
+                        },
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Contains",
+                            "selector": "mixpanel"
+                        },
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Contains",
+                            "selector": "optimizely"
+                        },
+                        {
+                            "matchVariable": "RequestArgNames",
+                            "selectorMatchOperator": "Equals",
+                            "selector": "reloadUri"
+                        },
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Contains",
+                            "selector": "Vizlib"
+                        },
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Contains",
+                            "selector": "NPWEBCONSOLE"
+                        },
+                        {
+                            "matchVariable": "RequestCookieNames",
+                            "selectorMatchOperator": "Contains",
+                            "selector": "NPNEWSSTAND"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
     "outputs": {}
 }

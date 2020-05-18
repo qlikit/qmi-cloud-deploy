@@ -113,7 +113,8 @@
             "mgmtAddressSpace": "[parameters('mgmtAddressSpace')]",
             "vnetName": "[concat(parameters('vnetName'),'-',parameters('environmentSuffix'))]",
             "vnetAddressSpace": "[parameters('vnetAddressSpace')]",
-            "vmSize": "[parameters('vmSize')]"
+            "vmSize": "[parameters('vmSize')]",
+            "wafTemplateName": "[concat('QlikSenseDefault-',parameters('environmentSuffix'))]"
         },
         "scriptLocation": "[concat(parameters('_artifactsLocation'), 'scripts/')]"
     },
