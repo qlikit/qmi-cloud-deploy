@@ -25,7 +25,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('qmiCommon').vnetName,'mgmt')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('qmiCommon').vnetName,'Infrastructure')]"
                             }
                         }
                     }
